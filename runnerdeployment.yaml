@@ -1,9 +1,26 @@
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
-  name: example-runnerdeploy
+  name: pjt-arc
 spec:
-  replicas: 1
   template:
     spec:
+      labels:
+        - pjt
+        - arc
       repository: pjain-taylor/actions-runner-controller
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: pjt-arc
+spec:
+  minReplicas: 0
+  maxReplicas: 10
+  scaleTargetRef:
+    kind: RunnerDeployment
+    name: pjt-arc
+  scaleUpTriggers:
+    - githubEvent:
+        workflowJob: {}
+      duration: "3m"
