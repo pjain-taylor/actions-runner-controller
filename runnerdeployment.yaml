@@ -15,7 +15,7 @@ kind: HorizontalRunnerAutoscaler
 metadata:
   name: pjt-arc
 spec:
-  minReplicas: 0
+  minReplicas: 1
   maxReplicas: 10
   scaleTargetRef:
     kind: RunnerDeployment
